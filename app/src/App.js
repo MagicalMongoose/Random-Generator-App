@@ -200,10 +200,10 @@ function App() {
 	};
 
 	return (
-		<div className="h-screen bg-gray-100 flex flex-col">
+		<div className="h-screen bg-gray-200 flex flex-col py-8">
 			<div className="flex-1 flex flex-col justify-between p-1 space-y-1 2xl:p-4 2xl:space-y-4">
 				{/* Coin Section */}
-				<div className="flex-1 flex flex-col justify-center items-center space-y-2">
+				<div className="flex-1 flex flex-col justify-center items-center p-1 space-y-1 2xl:p-4 2xl:space-y-4">
 					<div className="relative w-32 h-32">
 						{/* Coin container with perspective */}
 						<div className="relative w-full h-full" style={{ perspective: '1000px' }}>
@@ -248,7 +248,7 @@ function App() {
 				</div>
 
 				{/* Die Section */}
-				<div className="flex-1 flex flex-col justify-center items-center space-y-2">
+				<div className="flex-1 flex flex-col justify-center items-center p-1 space-y-1 2xl:p-4 2xl:space-y-4">
 					<div className="relative h-32 flex justify-center items-center perspective">
 						<div className="flex justify-center gap-2" style={{ width: `$diceCount * 90}px` }}>
 							{Array(diceCount).fill(0).map((_, index) => (
@@ -305,7 +305,7 @@ function App() {
 				</div>
 
 				{/* Card Section */}
-				<div className="flex-1 flex flex-col justify-center items-center space-y-2">
+				<div className="flex-1 flex flex-col justify-center items-center p-1 space-y-1 2xl:p-4 2xl:space-y-4">
 					<div className="relative w-24 h-32">
 						{cardResult ? (
 							<PlayingCard value={cardResult.value} suit={cardResult.suit} />
