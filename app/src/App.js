@@ -201,7 +201,7 @@ function App() {
 
 	return (
 		<div className="h-screen bg-gray-100 flex flex-col">
-			<div className="flex-1 flex flex-col justify-between p-2 space-y-2">
+			<div className="flex-1 flex flex-col justify-between p-1 space-y-1 2xl:p-4 2xl:space-y-4">
 				{/* Coin Section */}
 				<div className="flex-1 flex flex-col justify-center items-center space-y-2">
 					<div className="relative w-32 h-32">
