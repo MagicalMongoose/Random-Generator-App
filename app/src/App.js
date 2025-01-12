@@ -166,8 +166,18 @@ function App() {
 	};
 
 	const handleDiceCountChange = (e) => {
-		const newCount = Math.max(1, Math.min(6, parseInt(e.target.value) || 1));
-		setDiceCount(newCount);
+		const value = e.target.value;
+		// Allow empty input while typing
+		if (value === '') {
+			setDiceCount(1);
+			return;
+		}
+
+		const newCount = parseInt(value);
+		// Only update if it's a valid number between 1-6
+		if (!isNaN(newCount) && newCount >= 1 && newCount <= 6) {
+			setDiceCount(newCount);
+		}
 	};
 
 	const handleCardDraw = () => {
@@ -191,9 +201,9 @@ function App() {
 
 	return (
 		<div className="h-screen bg-gray-100 flex flex-col">
-			<div className="flex-1 flex flex-col justify-between p-4 space-y-4">
+			<div className="flex-1 flex flex-col justify-between p-2 space-y-2">
 				{/* Coin Section */}
-				<div className="flex-1 flex flex-col justify-center items-center space-y-4">
+				<div className="flex-1 flex flex-col justify-center items-center space-y-2">
 					<div className="relative w-32 h-32">
 						{/* Coin container with perspective */}
 						<div className="relative w-full h-full" style={{ perspective: '1000px' }}>
@@ -238,11 +248,11 @@ function App() {
 				</div>
 
 				{/* Die Section */}
-				<div className="flex-1 flex flex-col justify-center items-center space-y-4">
+				<div className="flex-1 flex flex-col justify-center items-center space-y-2">
 					<div className="relative h-32 flex justify-center items-center perspective">
 						<div className="flex justify-center gap-2" style={{ width: `$diceCount * 90}px` }}>
 							{Array(diceCount).fill(0).map((_, index) => (
-								<div key={index} className="w-16 h-16 shrink-0">
+								<div key={index} className={`${diceCount > 3 ? "w-12 h-12" : "w-16 h-16"} shrink-0`}>
 									<Die3D
 										value={dieResults[index]}
 										isRolling={isRolling}
@@ -260,17 +270,24 @@ function App() {
 						>
 							Roll Dice
 						</button>
-						<div className="flex items-center gap-2">
-							<input
-								type="number"
-								min="1"
-								max="6"
-								value={diceCount}
-								onChange={handleDiceCountChange}
-								className="w-16 px-2 py-1 text-center border rounded"
-								disabled={isRolling}
-							/>
-							<span className="text-sm text-gray-600">{diceCount === 1 ? "die" : "dice"}</span>
+						<div className="flex flex-col gap-1 items-center">
+							<div className="grid grid-cols-3 gap-1">
+								{[1, 2, 3, 4, 5, 6].map((count) => (
+									<button
+										key={count}
+										onClick={() => setDiceCount(count)}
+										disabled={isRolling}
+										className={`w-8 h-8 text-sm font-medium rounded 
+									${diceCount === count
+												? 'bg-green-600 text-white'
+												: 'bg-white text-gray-600 hover:bg-green-100'
+											} 
+									disabled:opacity-50 transition-colors`}
+									>
+										{count}
+									</button>
+								))}
+							</div>
 						</div>
 					</div>
 					<div className="h-8 text-center">
@@ -288,7 +305,7 @@ function App() {
 				</div>
 
 				{/* Card Section */}
-				<div className="flex-1 flex flex-col justify-center items-center space-y-4">
+				<div className="flex-1 flex flex-col justify-center items-center space-y-2">
 					<div className="relative w-24 h-32">
 						{cardResult ? (
 							<PlayingCard value={cardResult.value} suit={cardResult.suit} />
