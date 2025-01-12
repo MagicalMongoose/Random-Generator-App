@@ -101,6 +101,7 @@ const PlayingCard = ({ value, suit }) => {
 
 function App() {
 	const [coinResult, setCoinResult] = useState(null);
+	const [diceCount, setDiceCount] = useState(2);
 	const [dieResults, setDieResults] = useState([1, 1]);
 	const [cardResult, setCardResult] = useState(null);
 	const [isFlipping, setIsFlipping] = useState(false);
@@ -122,9 +123,9 @@ function App() {
 	const handleCoinFlip = () => {
 		setIsFlipping(true);
 		const result = Math.random() < 0.5 ? "Head" : "Tail";
-		const rotations = Math.floor(Math.random() * 8) + 4; // 2-5 rotations
+		const rotations = Math.floor(Math.random() * 6) + 6; // 6-12 rotations
 		const newRotation = rotations * 360 + (result === "Head" ? 0 : 180);
-		const newDuration = 1 + Math.random() * 0.4; // 1-1.4 seconds
+		const newDuration = 1.1 + Math.random() * 0.4; // 1.1-1.5 seconds
 
 		setFlipRotation(newRotation);
 		setFlipDuration(newDuration);
@@ -139,6 +140,15 @@ function App() {
 		}, newDuration * 1000);
 	};
 
+	useEffect(() => {
+		setDieResults(prev => {
+			if (prev.length < diceCount) {
+				return [...prev, ...Array(diceCount - prev.length).fill(1)];
+			}
+			return prev.slice(0, diceCount);
+		});
+	}, [diceCount]);
+
 	const handleDieRoll = () => {
 		setIsRolling(true);
 
@@ -147,11 +157,17 @@ function App() {
 		diceAudio.current.play();
 
 		setTimeout(() => {
-			const result1 = Math.floor(Math.random() * 6) + 1;
-			const result2 = Math.floor(Math.random() * 6) + 1;
-			setDieResults([result1, result2]);
+			const newResults = Array(diceCount).fill(0).map(() =>
+				Math.floor(Math.random() * 6) + 1
+			);
+			setDieResults(newResults);
 			setIsRolling(false);
-		}, 1200); // Slightly longer animation
+		}, 1200);
+	};
+
+	const handleDiceCountChange = (e) => {
+		const newCount = Math.max(1, Math.min(6, parseInt(e.target.value) || 1));
+		setDiceCount(newCount);
 	};
 
 	const handleCardDraw = () => {
@@ -223,26 +239,49 @@ function App() {
 
 				{/* Die Section */}
 				<div className="flex-1 flex flex-col justify-center items-center space-y-4">
-					<div className="relative w-full h-32 flex justify-center items-center perspective">
-						<div className="w-24 h-24 mx-2">
-							<Die3D value={dieResults[0]} isRolling={isRolling} offset={0} />
-						</div>
-						<div className="w-24 h-24 mx-2">
-							<Die3D value={dieResults[1]} isRolling={isRolling} offset={0.1} />
+					<div className="relative h-32 flex justify-center items-center perspective">
+						<div className="flex justify-center gap-2" style={{ width: `$diceCount * 90}px` }}>
+							{Array(diceCount).fill(0).map((_, index) => (
+								<div key={index} className="w-16 h-16 shrink-0">
+									<Die3D
+										value={dieResults[index]}
+										isRolling={isRolling}
+										offset={index * 0.1}
+									/>
+								</div>
+							))}
 						</div>
 					</div>
-					<button
-						onClick={handleDieRoll}
-						disabled={isRolling}
-						className="w-full max-w-xs bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded disabled:opacity-50"
-					>
-						Roll Dice
-					</button>
+					<div className="flex items-center gap-4 w-full max-w-xs">
+						<button
+							onClick={handleDieRoll}
+							disabled={isRolling}
+							className="flex-1 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded disabled:opacity-50"
+						>
+							Roll Dice
+						</button>
+						<div className="flex items-center gap-2">
+							<input
+								type="number"
+								min="1"
+								max="6"
+								value={diceCount}
+								onChange={handleDiceCountChange}
+								className="w-16 px-2 py-1 text-center border rounded"
+								disabled={isRolling}
+							/>
+							<span className="text-sm text-gray-600">{diceCount === 1 ? "die" : "dice"}</span>
+						</div>
+					</div>
 					<div className="h-8 text-center">
 						{dieResults && (
 							<div className="font-semibold">
-								You rolled a {dieResults[0]} and a {dieResults[1]}
-								(Total: {dieResults[0] + dieResults[1]})
+								Results: {dieResults.join(', ')}
+								{diceCount > 1 && (
+									<span className="text-gray-600">
+										{' '}(Total: {dieResults.reduce((a, b) => a + b, 0)})
+									</span>
+								)}
 							</div>
 						)}
 					</div>
@@ -279,32 +318,42 @@ function App() {
 			</div>
 
 			<style jsx global>{`
-        .perspective {
-          perspective: 1000px;
-        }
+				.perspective {
+				perspective: 1000px;
+				}
 
-        .preserve-3d {
-          transform-style: preserve-3d;
-        }
+				.preserve-3d {
+				transform-style: preserve-3d;
+				}
 
-        @keyframes roll3D {
-          0% { 
-            transform: rotateX(0) rotateY(0) rotateZ(0); 
-          }
-          30% {
-            transform: rotateX(360deg) rotateY(180deg) rotateZ(90deg) translate3d(10px, -20px, 30px);
-          }
-          60% {
-            transform: rotateX(720deg) rotateY(360deg) rotateZ(180deg) translate3d(-20px, 10px, -30px);
-          }
-          85% {
-            transform: rotateX(1080deg) rotateY(720deg) rotateZ(270deg) translate3d(5px, 5px, 5px);
-          }
-          100% { 
-            transform: rotateX(1080deg) rotateY(720deg) rotateZ(360deg) translate3d(0, 0, 0); 
-          }
-        }
-      `}</style>
+				@keyframes roll3D {
+				0% { 
+					transform: rotateX(0) rotateY(0) rotateZ(0); 
+				}
+				30% {
+					transform: rotateX(360deg) rotateY(180deg) rotateZ(90deg) translate3d(10px, -20px, 30px);
+				}
+				60% {
+					transform: rotateX(720deg) rotateY(360deg) rotateZ(180deg) translate3d(-20px, 10px, -30px);
+				}
+				85% {
+					transform: rotateX(1080deg) rotateY(720deg) rotateZ(270deg) translate3d(5px, 5px, 5px);
+				}
+				100% { 
+					transform: rotateX(1080deg) rotateY(720deg) rotateZ(360deg) translate3d(0, 0, 0); 
+				}
+				}
+
+				/* Hide number input spinners */
+				input[type=number]::-webkit-inner-spin-button, 
+				input[type=number]::-webkit-outer-spin-button { 
+				-webkit-appearance: none;
+				margin: 0;
+				}
+				input[type=number] {
+				-moz-appearance: textfield;
+				}
+			`}</style>
 		</div>
 	);
 }
