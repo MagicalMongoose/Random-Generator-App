@@ -1,22 +1,25 @@
 import { useState, useRef } from 'react';
 import spinningSound from "../Assets/Spinning.mp3";
 
-const generateColors = (count) => {
-	return Array(count).fill(0).map((_, i) =>
-		`hsl(${(i * 360) / count}, 70%, 60%)`
-	);
-};
 
 const SpinWheel = () => {
+    // States
     const [isSpinning, setIsSpinning] = useState(false);
     const [rotation, setRotation] = useState(0);
     const [wheelItems, setWheelItems] = useState(['Item 1', 'Item 2', 'Item 3', 'Item 4']);
     const [inputText, setInputText] = useState('Item 1\nItem 2\nItem 3\nItem 4');
     const [selectedItem, setSelectedItem] = useState(null);
     const [pointerColor, setPointerColor] = useState('rgb(239, 68, 68)');
-
-    // Audio ref
+    
+    // Audio
     const spinAudio = useRef(new Audio(spinningSound));
+    
+    // Helper Functions
+    const generateColors = (count) => {
+        return Array(count).fill(0).map((_, i) =>
+            `hsl(${(i * 360) / count}, 70%, 60%)`
+        );
+    };
 
     const colors = generateColors(wheelItems.length);
 

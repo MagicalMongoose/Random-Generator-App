@@ -2,12 +2,15 @@ import { useState, useEffect, useRef } from 'react';
 import diceThrow from "../Assets/Dice Throw.mp3"
 
 const RollDice = () => {
+    // States
     const [diceCount, setDiceCount] = useState(2);
     const [dieResults, setDieResults] = useState([1, 1]);
     const [isRolling, setIsRolling] = useState(false);
 
+    // Audio
     const diceAudio = useRef(new Audio(diceThrow));
 
+    // Helper Functions
     useEffect(() => {
 		setDieResults(prev => {
 			if (prev.length < diceCount) {

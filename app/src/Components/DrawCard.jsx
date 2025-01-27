@@ -5,13 +5,16 @@ const DrawCard = () => {
     const suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades'];
 	const values = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
 
+    // States
     const [cardResult, setCardResult] = useState(null);
     const [deck, setDeck] = useState(
 		suits.flatMap(suit => values.map(value => ({ value, suit })))
 	);
 
+    // Audio
     const cardAudio = useRef(new Audio(cardDraw));
 
+    // Helper Functions
     const handleCardDraw = () => {
         if (deck.length === 0) {
             setCardResult(null);
@@ -33,7 +36,7 @@ const DrawCard = () => {
 
 
     const PlayingCard = ({ value, suit }) => {
-        // Previous PlayingCard implementation remains the same
+        // Generate visual representation of each playing card
         const suitSymbols = {
             'Hearts': '♥',
             'Diamonds': '♦',
