@@ -81,12 +81,12 @@ const RollDice = () => {
                 ${getDotPattern(value)}
             `,
             transforms: {
-                front: 'translateZ(40px)',
-                back: 'translateZ(-40px) rotateY(180deg)',
-                right: 'translateX(40px) rotateY(90deg)',
-                left: 'translateX(-40px) rotateY(-90deg)',
-                top: 'translateY(-40px) rotateX(90deg)',
-                bottom: 'translateY(40px) rotateX(-90deg)',
+                front: 'translateZ(25px)',
+                back: 'translateZ(-25px) rotateY(180deg)',
+                right: 'translateX(25px) rotateY(90deg)',
+                left: 'translateX(-25px) rotateY(-90deg)',
+                top: 'translateY(-25px) rotateX(90deg)',
+                bottom: 'translateY(25px) rotateX(-90deg)',
             }
         },
         8: {
