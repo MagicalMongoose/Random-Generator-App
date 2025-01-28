@@ -24,20 +24,8 @@ function App() {
 			}
 
 			@keyframes roll3D {
-			0% { 
-				transform: rotateX(0) rotateY(0) rotateZ(0); 
-			}
-			30% {
-				transform: rotateX(360deg) rotateY(180deg) rotateZ(90deg) translate3d(10px, -20px, 30px);
-			}
-			60% {
-				transform: rotateX(720deg) rotateY(360deg) rotateZ(180deg) translate3d(-20px, 10px, -30px);
-			}
-			85% {
-				transform: rotateX(1080deg) rotateY(720deg) rotateZ(270deg) translate3d(5px, 5px, 5px);
-			}
-			100% { 
-				transform: rotateX(1080deg) rotateY(720deg) rotateZ(360deg) translate3d(0, 0, 0); 
+				0% { transform: rotateX(0) rotateY(0) rotateZ(0); }
+				100% { transform: rotateX(720deg) rotateY(720deg) rotateZ(720deg); }
 			}
 			}
 
