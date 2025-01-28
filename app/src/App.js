@@ -3,6 +3,7 @@ import CoinFlip from './Components/CoinFlip';
 import RollDice from './Components/RollDice';
 import DrawCard from './Components/DrawCard';
 import SpinWheel from './Components/SpinWheel';
+import ReelSlots from './Components/ReelSlots';
 
 function App() {
 	return (
@@ -12,6 +13,7 @@ function App() {
 				<RollDice />
 				<DrawCard />
 				<SpinWheel />
+				<ReelSlots />
 			</div>
 
 			<style jsx global>{`
