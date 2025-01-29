@@ -58,8 +58,7 @@ const ReelSlots = () => {
                     <div
                         className={`absolute left-0 right-0 ${spinning ? 'spinning' : ''}`}
                         style={{
-                            animationDelay: `${index * 0.2}s`,
-                            animationDuration: `${1.4 + index * 0.4}s`
+                            animationDuration: `${3 + index * 0.25}s`
                         }}
                     >
                         {displaySymbols.map((symbol, i) => (
@@ -81,8 +80,8 @@ const ReelSlots = () => {
     };
 
     return (
-        <div className="flex-1 flex flex-col justify-center items-center p-1 space-y-1 2xl:p-4 2xl:space-y-4">
-            <div className="bg-gray-800 p-6 rounded-xl shadow-lg">
+        <div className="flex-1 flex flex-col justify-center items-center p-1 space-y-1 xl:p-4 xl:space-y-4">
+            <div className="p-6">
                 <div className="flex gap-2 mb-4">
                     {reels.map((reel, index) => (
                         <Reel
@@ -97,9 +96,9 @@ const ReelSlots = () => {
                 <button
                     onClick={handleSpin}
                     disabled={isSpinning}
-                    className="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded disabled:opacity-50 transition-colors"
+                    className="w-full max-w-xs bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded disabled:opacity-50 transition-colors"
                 >
-                    {isSpinning ? 'Spinning...' : 'Pull Lever'}
+                    {isSpinning ? "Reeling..." : "Pull Lever"}
                 </button>
             </div>
 
@@ -124,7 +123,7 @@ const ReelSlots = () => {
 
                     @keyframes spinReel {
                         0% { transform: translateY(0); }
-                        to { transform: translateY(${-SYMBOL_HEIGHT * symbols.length}px); }
+                        to { transform: translateY(${-SYMBOL_HEIGHT * symbols.length * 2}px); }
                     }
                 `}
             </style>

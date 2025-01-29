@@ -240,7 +240,7 @@ const RollDice = () => {
     const diceTypes = [4, 6, 8, 10, 12, 20, 100];
 
     return (
-        <div className="flex-1 flex flex-col justify-center items-center p-1 space-y-1 2xl:p-4 2xl:space-y-4">
+        <div className="flex-1 flex flex-col justify-center items-center p-1 space-y-1 xl:p-4 xl:space-y-4">
             <div className="relative h-32 flex justify-center items-center perspective">
                 <div className="flex justify-center gap-2" style={{ width: `${diceCount * 90}px` }}>
                     {Array(diceCount).fill(0).map((_, index) => (
@@ -255,24 +255,23 @@ const RollDice = () => {
                 </div>
             </div>
             <div className="flex items-center gap-4 w-full max-w-md">
-                <div className="flex flex-col gap-1 items-center">
-                    <div className="grid grid-cols-4 gap-1">
-                        {diceTypes.map((type) => (
-                            <button
-                                key={type}
-                                onClick={() => setDiceType(type)}
-                                disabled={isRolling}
-                                className={`w-10 h-8 text-sm font-medium rounded 
+
+                <div className="grid grid-cols-3 gap-1 justify-right">
+                    {diceTypes.map((type) => (
+                        <button
+                            key={type}
+                            onClick={() => setDiceType(type)}
+                            disabled={isRolling}
+                            className={`w-10 h-8 text-sm font-medium rounded 
                                     ${diceType === type
-                                        ? 'bg-blue-600 text-white'
-                                        : 'bg-white text-gray-600 hover:bg-blue-100'
-                                    } 
+                                    ? 'bg-green-600 text-white'
+                                    : 'bg-white text-gray-600 hover:bg-green-100'
+                                } 
                                     disabled:opacity-50 transition-colors`}
-                            >
-                                D{type}
-                            </button>
-                        ))}
-                    </div>
+                        >
+                            D{type}
+                        </button>
+                    ))}
                 </div>
 
                 <button
@@ -280,7 +279,7 @@ const RollDice = () => {
                     disabled={isRolling}
                     className="flex-1 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded disabled:opacity-50"
                 >
-                    Roll Dice
+                    {isRolling ? "Rolling..." : "Roll Dice"}
                 </button>
 
                 <div className="flex flex-col gap-1 items-center">
@@ -303,6 +302,7 @@ const RollDice = () => {
                     </div>
                 </div>
             </div>
+
             <div className="h-8 text-center">
                 {dieResults && (
                     <div className="font-semibold">

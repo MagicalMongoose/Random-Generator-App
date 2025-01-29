@@ -3,13 +3,13 @@ import cardDraw from "../Assets/Card Draw.mp3"
 
 const DrawCard = () => {
     const suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades'];
-	const values = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+    const values = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
 
     // States
     const [cardResult, setCardResult] = useState(null);
     const [deck, setDeck] = useState(
-		suits.flatMap(suit => values.map(value => ({ value, suit })))
-	);
+        suits.flatMap(suit => values.map(value => ({ value, suit })))
+    );
 
     // Audio
     const cardAudio = useRef(new Audio(cardDraw));
@@ -69,7 +69,7 @@ const DrawCard = () => {
     };
 
     return (
-        <div className="flex-1 flex flex-col justify-center items-center p-1 space-y-1 2xl:p-4 2xl:space-y-4">
+        <div className="flex-1 flex flex-col justify-center items-center p-1 space-y-1 xl:p-4 xl:space-y-4">
             <div className="relative w-24 h-32">
                 {cardResult ? (
                     <PlayingCard value={cardResult.value} suit={cardResult.suit} />

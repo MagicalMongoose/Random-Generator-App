@@ -10,10 +10,10 @@ const SpinWheel = () => {
     const [inputText, setInputText] = useState('Item 1\nItem 2\nItem 3\nItem 4');
     const [selectedItem, setSelectedItem] = useState(null);
     const [pointerColor, setPointerColor] = useState('rgb(239, 68, 68)');
-    
+
     // Audio
     const spinAudio = useRef(new Audio(spinningSound));
-    
+
     // Helper Functions
     const generateColors = (count) => {
         return Array(count).fill(0).map((_, i) =>
@@ -62,11 +62,11 @@ const SpinWheel = () => {
     };
 
     return (
-        <div className="flex-1 flex flex-col justify-center items-center p-1 space-y-1 2xl:p-4 2xl:space-y-4">
+        <div className="flex-1 flex flex-col justify-center items-center p-1 space-y-1 xl:p-4 xl:space-y-4">
             <textarea
                 value={inputText}
                 onChange={handleInputChange}
-                className="w-64 h-32 p-2 border rounded resize-none max-w-fit"
+                className="w-64 h-32 p-2 border rounded resize-none max-w-fit max-h-20"
                 placeholder="Enter items (separated by commas or new lines)"
             />
 
